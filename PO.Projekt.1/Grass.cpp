@@ -1,41 +1,35 @@
-//#include "Grass.h"
-//
-//
-//
-//void Grass::action()
-//{
-//}
-//
-//void Grass::draw()
-//{
-//	Utilities::gotoxy(pos.x + 1, pos.y + 1);
-//	putchar(symbol);
-//}
-//
-//void Grass::collision()
-//{
-//}
-//
-//void Grass::defense(Organism& o)
-//{
-//}
-//
-//void Grass::die()
-//{
-//}
-//
-//void Grass::reproduce()
-//{
-//}
-//
-//Grass::Grass(World& w) : id(1), strength(0), initiative(0), pos(15,15), world(w), symbol('G'), colour(0)
-//{
-//	world.organisms[pos.x][pos.y] = this;
-//	world.addOrganism(this);
-//
-//}
-//
-//
-//Grass::~Grass()
-//{
-//}
+#include "Grass.h"
+#include "World.h"
+
+Grass::Grass(World&) : Plant(0, 0, 0, "Grass", 'G', 0, world) {}
+Grass::~Grass() {}
+
+Grass::Grass(World&, int x, int y) : Plant(0, 0, 0, "Grass", 'G', 0, world) {
+	this->pos.x = x;
+	this->pos.y = y;
+}
+
+void Grass::reproduce() {
+	Grass* child = nullptr;
+	if (world.organisms[pos.x][pos.y - 1] != nullptr && pos.y > 0) {
+		child = new Grass(world, pos.x, pos.y - 1);
+	}
+	else if (world.organisms[pos.x][pos.y + 1] != nullptr && pos.y < world.getHeight() - 1) {
+		child = new Grass(world, pos.x, pos.y + 1);
+
+	}
+	else if (world.organisms[pos.x - 1][pos.y] != nullptr && pos.x > 0) {
+		child = new Grass(world, pos.x - 1, pos.y);
+
+	}
+	else if (world.organisms[pos.x + 1][pos.y] != nullptr && pos.x < world.getWidth()) {
+		child = new Grass(world, pos.x + 1, pos.y);
+	}
+	world.organisms[child->pos.x][child->pos.y] = child;
+	world.listOfOrganisms.push_back(child);
+	world.sortByInitiative();
+}
+
+void Grass::defense(Organism& attacker) {
+	this->die();
+}

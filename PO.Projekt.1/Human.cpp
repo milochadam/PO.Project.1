@@ -1,6 +1,10 @@
 #include "Human.h"
 #include "World.h"
-Human::Human(World& w) : Animal(10, 4, 0, "human", 'A', 0, w) { }
+#include <conio.h>
+#include "Utilities.h"
+Human::Human(World& w) : Animal(10, 4, 0, "human", 'A', 0, w) {
+	cooldown = 0;
+}
 Human::~Human() { printf("YOU HAVE DIED\n"); }
 
 enum {
@@ -36,6 +40,15 @@ void Human::action()
 		}
 	else if (key == 'q')
 		world.theEnd = true;
+	else if (key == ' ' && cooldown == 0) {
+		strength = 10;
+		cooldown = 6;
+	}
+	if(strength>baseStrength) {
+		strength--;
+	}
+	if (cooldown > 0)
+		cooldown--;
 	//else
 		//printf("%d", world.getOrganismsSize());
 	Organism* other = world.organisms[pos.x][pos.y];
@@ -46,7 +59,7 @@ void Human::action()
 		world.organisms[ppos.x][ppos.y] = nullptr;
 		world.organisms[pos.x][pos.y] = this;
 	}
-	//this->debug();
+	this->debug();
 }
 
 
@@ -71,15 +84,14 @@ void Human::reproduce()
 }
 
 
-void Human::debug()
-{
+void Human::debug() const {
 	Utilities::gotoxy(50, 20);
 	printf("getposx: %d", this->pos.x);
 	Utilities::gotoxy(50, 21);
 	printf("getposx: %d", this->pos.y);
 	Utilities::gotoxy(50, 22);
-	if (world.organisms[15][15] == nullptr)
-		printf("getposx: %d", this->pos.y);
+	printf("organisms size: %d", world.getOrganismsSize());
+
 }
 
 //¶

@@ -1,27 +1,16 @@
-//#pragma once
-//#include "Plant.h"
-//#include "Position.h"
-//#include "World.h"
-//class Grass :
-//	public Plant
-//{
-//	const int id;
-//	int strength;
-//	const int initiative;
-//
-//	Position pos;
-//
-//	const char symbol;
-//	const int colour;
-//	Utilities u;
-//	World& world;
-//public:
-//	void action() override;
-//	void draw() override;
-//	void defense(Organism& o) override;
-//	void die();
-//	void reproduce();
-//	Grass(World & w);
-//	~Grass();
-//};
-//
+#ifndef GRASS_H
+#define GRASS_H
+#include "Plant.h"
+//class World;
+
+class Grass : public Plant {
+public:
+	Grass(World&);
+	Grass(World&, int, int);
+	~Grass();
+	void reproduce() override;
+	void defense(Organism& attacker) override;
+	//void action() override;
+};
+
+#endif

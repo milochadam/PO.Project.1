@@ -1,35 +1,22 @@
-#include <iostream>
 #include "World.h"
-#include "Human.h"
 #include "Interface.h"
 #include "Utilities.h"
-#include "Wolf.h"
-#include "Grass.h"
-#include <conio.h>
+
 #define WIDTH 40
 #define HEIGHT 20
 
+// TODO: poprawiæ w reproduce() warunek != nullptr na == nullptr
+
 int main() {
-
 	// TODO: wymiary œwiata podane przez u¿ytkownika
-
 	World world(WIDTH, HEIGHT);
-
+	Interface::draw(world);
 	
-	//Wolf wolf(world);
-
-
-	// TODO: przerobiæ Interface na klasê statyczn¹
-	Interface i(world);
-	i.draw();
-
-
-	while (!world.theEnd) {
+	do {
 		world.drawWorld();
 		world.doTurn();
-		world.events();
-		
-	}
-	//system("pause");
+	} while (!world.theEnd);
+	system("pause");
+	Utilities::gameOver(world.getTurnCount(),world.getOrganismsSize());
 	return 0;
 }

@@ -1,26 +1,26 @@
 #include "World.h"
+#include "Utilities.h"
+#include "Human.h"
+#include "Wolf.h"
+#include <algorithm>
+#include <iostream>
 #define WOLF_COUNT 1
 
-World::World(int width, int height) : turn(0), width(width), height(height) {
-	int i, j;
+World::World(int width, int height) : width(width), height(height), turn(0) {
 	//int x, y;
 	organisms = new Organism**[height];
-	for (i = 0; i < width; i++) {
+	for (int i = 0; i < width; i++) {
 		organisms[i] = new Organism*[width];
-		for (j = 0; j < height; j++) {
-			organisms[i][j] = nullptr;
+	}
+	for (int x = 0; x < width; x++) {
+		for (int y = 0; y < height; y++) {
+			organisms[x][y] = nullptr;
 		}
 	}
 
-	addOrganism(new Human(*this));
-	addOrganism(new Wolf(*this));
-	//for (i = 0; i < WOLF_COUNT; i++) {
-	//	x = Utilities::randomize(0, getWidth() - 1);
-	//	y = Utilities::randomize(0, getHeight() - 1);
-	//	
-	//}
+	listOfOrganisms.push_back(new Human(*this));
+	listOfOrganisms.push_back(new Wolf(*this));
 	Utilities::hideCursor();
-	//listOfOrganisms.sort([](const Organism * a, const Organism *b) { return (*a).getInitiative() < (*b).getInitiative(); });
 	sortByInitiative();
 }
 
@@ -28,22 +28,24 @@ World::World(int width, int height) : turn(0), width(width), height(height) {
 World::~World()
 {
 	listOfOrganisms.erase(listOfOrganisms.begin(), listOfOrganisms.end());
-	int i;
-	for (i = 0; i < width; i++) {
-		delete[] organisms[i];
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			if (organisms[i][j])
+				delete organisms[i][j];
+		}
 	}
-	delete organisms;
+	//for (int i = 0; i < width; i++) {
+	//	delete[] organisms[i];
+	//}
+	//delete organisms;
 }
 
-void World::addOrganism(Organism* o) {
-	listOfOrganisms.push_back(o);
-}
 void World::sortByInitiative() {
-	listOfOrganisms.sort([](const Organism * a, const Organism * b) { return (*a).getInitiative() > (*b).getInitiative(); });
+	listOfOrganisms.sort([](Organism *a, Organism *b) { return a->getInitiative() < b->getInitiative(); });
 }
 
 
-void World::drawWorld() {
+void World::drawWorld() const {
 	int i, j;
 	for (i = 0; i < width; i++)
 	{
@@ -55,38 +57,33 @@ void World::drawWorld() {
 			}
 		}
 	}
+	events();
 }
 
 void World::doTurn() {
-	this->turn++;
-	// usuwanie 
-	std::list<Organism*>::iterator it;
-	//std::list<Organism*>::reverse_iterator rit;
-	for (it = listOfOrganisms.begin(); it != listOfOrganisms.end(); ++it) {
+	drawWorld();
+	for (std::list<Organism*>::iterator it = listOfOrganisms.begin(); it != listOfOrganisms.end(); ++it) {
 		(*it)->action();
 	}
-	/*for (rit = listOfOrganisms.rbegin(); rit != listOfOrganisms.rend(); ++rit) {
-		if ((*it)->getAge() < 0)
-			listOfOrganisms.erase(it);
-	}*/
-	for (it = listOfOrganisms.begin(); it != listOfOrganisms.end(); ++it) {
-		if ((*it)->getAge() < 0)
-			it=listOfOrganisms.erase(it);
-	}
+
+	//for (std::list<Organism*>::iterator it = listOfOrganisms.begin(); it != listOfOrganisms.end(); ++it) {
+	//	if ((*it)->getAge() < 0)
+	//		it=listOfOrganisms.erase(it);
+	//}
+
+
+	this->turn++;
 }
 
-void World::events()
-{
+void World::events() const {
 	Utilities::gotoxy(50, 5);
 	printf("Tura nr: %d", turn);
 }
 
-int World::getWidth() {	return width; }
-int World::getHeight() { return height; }
+int World::getWidth() const { return width; }
+int World::getHeight() const { return height; }
 
 
-int World::getOrganismsSize()
-{
-	return listOfOrganisms.size();
-}
+int World::getOrganismsSize() const { return listOfOrganisms.size(); }
 
+int World::getTurnCount() const { return turn; }

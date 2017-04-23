@@ -1,53 +1,41 @@
 #include "Dandelion.h"
+#include "World.h"
 
+Dandelion::Dandelion(World&) : Plant(0, 0, 0, "Dandelion", 'G', 0, world) {}
+Dandelion::~Dandelion() {}
 
+Dandelion::Dandelion(World&, int x, int y) : Plant(0, 0, 0, "Dandelion", 'G', 0, world) {
+	this->pos.x = x;
+	this->pos.y = y;
+}
 
-void Dandelion::action()
-{
-	if (isRoom()) {
-		if (world.organisms[pos.x - 1][pos.y] == nullptr) {
-			Dandelion* dandelion = new Dandelion(world);
-			world.organisms[pos.x - 1][pos.y] = dandelion;
-			world.addOrganism(dandelion);
-		}
+void Dandelion::reproduce() {
+	Dandelion* child = nullptr;
+	if (world.organisms[pos.x][pos.y - 1] != nullptr && pos.y > 0) {
+		child = new Dandelion(world, pos.x, pos.y - 1);
 	}
+	else if (world.organisms[pos.x][pos.y + 1] != nullptr && pos.y < world.getHeight() - 1) {
+		child = new Dandelion(world, pos.x, pos.y + 1);
+
+	}
+	else if (world.organisms[pos.x - 1][pos.y] != nullptr && pos.x > 0) {
+		child = new Dandelion(world, pos.x - 1, pos.y);
+
+	}
+	else if (world.organisms[pos.x + 1][pos.y] != nullptr && pos.x < world.getWidth()) {
+		child = new Dandelion(world, pos.x + 1, pos.y);
+	}
+	world.organisms[child->pos.x][child->pos.y] = child;
+	world.listOfOrganisms.push_back(child);
+	world.sortByInitiative();
 }
 
-void Dandelion::draw()
-{
+void Dandelion::defense(Organism& attacker) {
+	this->die();
 }
 
-void Dandelion::collision()
-{
-}
-
-void Dandelion::defense(Organism& o)
-{
-}
-
-void Dandelion::reproduce()
-{
-}
-
-void Dandelion::die()
-{
-}
-
-bool Dandelion::isRoom()
-{
-	if (world.organisms[pos.x - 1][pos.y] == nullptr ||
-		world.organisms[pos.x + 1][pos.y] == nullptr ||
-		world.organisms[pos.x][pos.y + 1] == nullptr ||
-		world.organisms[pos.x][pos.y - 1] == nullptr)
-		return true;
-	return false;
-}
-
-Dandelion::Dandelion(World& w) : world(w), id(2), initiative(0), symbol('D'), colour(0), pos(0,0)
-{
-}
-
-
-Dandelion::~Dandelion()
-{
+void Dandelion::action() {
+	Plant::action();
+	Plant::action();
+	Plant::action();
 }

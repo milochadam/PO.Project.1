@@ -1,22 +1,18 @@
 #ifndef WORLD_H
 #define WORLD_H
-#include <iostream>
-#include <list>
-#include <algorithm>
-
 #include "Organism.h"
-#include "Utilities.h"
-#include "Human.h"
-#include "Wolf.h"
 #include "Dandelion.h"
+#include <vector>
+#include <list>
 class Organism;
 class Human;
 class Wolf;
 class Danelion;
 class World
 {
-	std::list <Organism*> listOfOrganisms;
+	friend class Interface;
 public:
+	std::list<Organism*> listOfOrganisms;
 	Organism*** organisms;
 	bool theEnd = false;
 private:
@@ -27,15 +23,14 @@ private:
 public:
 	World(int width, int height);
 	~World();
-	void addOrganism(Organism* o);
 	void sortByInitiative();
-	void drawWorld();
+	void drawWorld() const;
 	void doTurn();
-	void events();
+	void events() const;
 
-	int getWidth();
-	int getHeight();
-
-	int getOrganismsSize();
+	int getWidth() const;
+	int getHeight() const;
+	int getTurnCount() const;
+	int getOrganismsSize() const;
 };
 #endif // !WORLD_H

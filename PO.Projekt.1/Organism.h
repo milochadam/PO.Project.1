@@ -1,7 +1,6 @@
 #ifndef ORGANISM_H
 #define ORGANISM_H
 #include <string>
-#include "Utilities.h"
 #include "Position.h"
 class World;
 class Organism
@@ -29,17 +28,19 @@ public:
 	virtual void draw();
 
 
-	Organism(int, int, int, std::string, char, int, World&);
-	~Organism();
+	Organism(int str, int init, int age, std::string, char symbol, int, World&);
+	virtual ~Organism();
 
 	// getters
-	int getStrength();
+	int getStrength() const;
 	int getInitiative() const;
-	int getAge();
-	std::string getSpecies();
-	char getSymbol();
-	int getPosX();
-	int getPosY();
+	int getAge() const;
+	std::string getSpecies() const;
+	char getSymbol() const;
+	int getPosX() const;
+	int getPosY() const;
+	int getPPosX() const;
+	int getPPosY() const;
 
 	//settery
 	void setPosx(int x);
@@ -48,7 +49,6 @@ public:
 	void setStrength(int s);
 	
 	bool attackReflected(Organism& attacker);
-	void grow();
 	void die();
 
 	void allocate();

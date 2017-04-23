@@ -1,5 +1,6 @@
 #include "Organism.h"
 #include "World.h"
+#include "Utilities.h"
 
 
 Organism::Organism(int str, int init, int age, std::string species, char symbol, int colour, World& world)
@@ -13,8 +14,9 @@ void Organism::die() {
 		world.theEnd = true;
 		printf("You have died\n");
 	}
-	else
-		age = -2;
+	else {
+		world.listOfOrganisms.remove(this);
+	}
 }
 
 void Organism::allocate() {
@@ -60,15 +62,17 @@ void Organism::draw() {
 }
 
 
-int Organism::getStrength() { return this->strength; }
+int Organism::getStrength() const { return this->strength; }
 int Organism::getInitiative() const { return this->initiative; }
-int Organism::getAge() { return this->age; }
-std::string Organism::getSpecies() { return this->species; }
+int Organism::getAge() const { return this->age; }
+std::string Organism::getSpecies() const { return this->species; }
 
-char Organism::getSymbol() { return this->symbol; }
+char Organism::getSymbol() const { return this->symbol; }
 
-int Organism::getPosX() { return this->pos.x; }
-int Organism::getPosY() { return this->pos.y; }
+int Organism::getPosX() const { return this->pos.x; }
+int Organism::getPosY() const { return this->pos.y; }
+int Organism::getPPosX() const { return this->ppos.x; }
+int Organism::getPPosY() const { return this->ppos.y; }
 
 // setters
 void Organism::setPosx(int x) { this->pos.x = x; }
@@ -81,6 +85,3 @@ bool Organism::attackReflected(Organism& attacker) {
 		return true;
 	return false;
 }
-
-void Organism::grow() { this->age++; }
-

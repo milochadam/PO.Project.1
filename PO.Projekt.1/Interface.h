@@ -1,7 +1,4 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include "Utilities.h"
 #include "World.h"
 class World;
 class Interface
@@ -11,16 +8,13 @@ public:
 	const int startPosy;
 	const int width;
 	const int height;
-	int x;
-	int y;
-	World& world;
+	//World& world;
 	//std::string Name;
 
-	Interface(World& w);
+	Interface(/*World& w*/);
 	~Interface();
 
-	void draw();
-	void drawBorder();
-	void drawData();
+	static void draw(World& world);
+	static void drawBorder(World& world);
+	static void drawData(World& world);
 };
-

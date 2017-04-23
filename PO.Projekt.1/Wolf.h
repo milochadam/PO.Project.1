@@ -8,12 +8,11 @@ class Wolf :
 	public Animal
 {
 public:
-	void reproduce();
+	void reproduce() override;
 	
 	Wolf(World& w);
 	Wolf(World& w, int x, int y);
 	~Wolf();
 	//void action();
 };
-
 #endif // !WOLF_H

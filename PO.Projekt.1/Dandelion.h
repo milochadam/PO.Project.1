@@ -1,37 +1,14 @@
-//#pragma once
-//#include "World.h"
-//#include "Plant.h"
-//#include "Position.h"
-//#include "Utilities.h"
-//
-////#ifndef DANDELION_H
-////#define DANDELION_H
-//
-//
-//
-//class Dandelion :
-//	public Plant
-//{
-//	const int id;
-//	int strength;
-//	const int initiative;
-//
-//	Position pos;
-//
-//	const char symbol;
-//	const int colour;
-//	Utilities u;
-//	World& world;
-//public:
-//	void action() override;
-//	void draw() override;
-//	void collision() override;
-//	void defense(Organism& o) override;
-//	void reproduce();
-//	void die();
-//	bool isRoom();
-//public:
-//	Dandelion(World& w);
-//	~Dandelion();
-//};
-////#endif // !DANDELION_H
+#ifndef DANDELION_H
+#define DANDELION_H
+#include "Plant.h"
+
+class Dandelion : public Plant {
+public:
+	Dandelion(World&);
+	Dandelion(World&, int, int);
+	~Dandelion();
+	void reproduce() override;
+	void defense(Organism& attacker) override;
+	void action() override;
+};
+#endif

@@ -1,7 +1,6 @@
 #include "Utilities.h"
 #include <time.h>
 #include <Windows.h>
-#include <string>
 #include <random>
 #include <iostream>
 using namespace std;
@@ -21,8 +20,7 @@ int Utilities::randomMovement() {
 
 void Utilities::setColour(int k) {
 	SetConsoleTitle(TEXT("Virtual world - Adam Miloch 165178"));
-	HANDLE hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, k);
 }
 

@@ -8,12 +8,23 @@ Wolf::Wolf(World& world, int x, int y) : Animal(9, 5, 0, "wolf", 'W', 0, world) 
 	this->pos.y = y;
 }
 Wolf::~Wolf() { }
-
+//ABetterCopyingClass(const ABetterCopyingClass& r)
+//{
+//	a_ = new int(*r.a_);
+//}
+//
+//ABetterCopyingClass& operator=(const ABetterCopyingClass& r)
+//{
+//	// in the case of reassignment...
+//	delete a_;
+//
+//	a_ = new int(*r.a_);
+//	return *this;
+//}
 
 void Wolf::reproduce()
 {
-	// TODO
-	Wolf* child;
+	Wolf* child = nullptr;
 	if (world.organisms[pos.x][pos.y - 1] != nullptr && pos.y > 0) {
 		child = new Wolf(world, pos.x, pos.y - 1);
 	}

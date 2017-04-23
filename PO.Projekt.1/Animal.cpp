@@ -1,5 +1,6 @@
 #include "Animal.h"
 #include "World.h"
+#include "Utilities.h"
 
 
 Animal::Animal(int str, int init, int age, std::string species, char symbol, int colour, World& world)
@@ -8,7 +9,7 @@ Animal::~Animal() { }
 
 void Animal::action() {
 	//dodaj wiek;
-	grow();
+	age++;
 	ppos = pos;
 	//int direction = Utilities::randomize(0, 3);
 	int direction = Utilities::randomize(0, 3);

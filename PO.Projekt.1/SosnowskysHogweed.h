@@ -1,10 +1,12 @@
-#pragma once
+#ifndef SOSNOWSKYSHOGWEED_H
+#define SOSNOWSKYSHOGWEED_H
 #include "Plant.h"
-class SosnowskysHogweed :
-	public Plant
-{
+class SosnowskysHogweed : public Plant {
 public:
-	SosnowskysHogweed();
+	SosnowskysHogweed(World&);
+	SosnowskysHogweed(World&, int, int);
 	~SosnowskysHogweed();
+	void reproduce() override;
+	void defense(Organism& attacker) override;
 };
-
+#endif
