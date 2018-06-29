@@ -1,41 +1,36 @@
 #ifndef WORLD_H
 #define WORLD_H
-#include <iostream>
 #include <list>
-#include <algorithm>
+#include "Array2D.h"
 
-#include "Organism.h"
-#include "Utilities.h"
-#include "Human.h"
-#include "Wolf.h"
-#include "Dandelion.h"
 class Organism;
-class Human;
-class Wolf;
-class Danelion;
-class World
-{
-	std::list <Organism*> listOfOrganisms;
-public:
-	Organism*** organisms;
-	bool theEnd = false;
-private:
-	const int width;
-	const int height;
-	int turn;
+class Position;
+class World {
+    std::list<Organism*> listOfOrganisms;
 
-public:
-	World(int width, int height);
-	~World();
-	void addOrganism(Organism* o);
-	void sortByInitiative();
-	void drawWorld();
-	void doTurn();
-	void events();
+   public:
+    bool gameOver = false;
 
-	int getWidth();
-	int getHeight();
+   private:
+    const int _width;
+    const int _height;
+    Array2D<Organism*> _map;
+    int _turn;
 
-	int getOrganismsSize();
+   public:
+    World(int width, int height);
+    ~World();
+
+    bool isValid(Position p);
+
+    void drawWorld();
+    void executeTurn();
+    void initPlayer(Position p);
+    void addOrganism(Organism* o);
+    void moveOrganism(Organism* o);
+    void destroyOrganisms();
+
+    int width();
+    int height();
 };
-#endif // !WORLD_H
+#endif  // !WORLD_H

@@ -1,57 +1,58 @@
 #ifndef ORGANISM_H
 #define ORGANISM_H
 #include <string>
-#include "Utilities.h"
 #include "Position.h"
+#include "Utilities.h"
 class World;
-class Organism
-{
-protected:
-	int strength;
-	int initiative;
-	int age;
+class Organism {
+   protected:
+    struct Stats {
+        int strength;
+        int initiative;
+        int age;
+        Stats(int str, int init, int age) {
+            strength = str;
+            initiative = init;
+            this->age = age;
+        }
+    };
 
-	std::string species;
+    Stats stats;
+    char symbol;
+    int colour;
 
-	char symbol;
-	int colour;
+    Position pos;
+    Position ppos;
+    World& world;
 
+   public:
+    Organism(Stats, World&);
+    virtual ~Organism();
 
-	Position pos;
-	Position ppos;
-	World& world;
+    // virtual
+    virtual void action() = 0;
+    virtual void defense(Organism& o) = 0;
+    virtual void reproduce() = 0;
+    virtual void draw() = 0;
 
-public:
-	// virtual
-	virtual void action() = 0;
-	virtual void defense(Organism& o) = 0;
-	virtual void reproduce() = 0;
-	virtual void draw();
+    // getters
+    int getStrength();
+    int getInitiative() const;
+    int getAge();
+    Position getCurrentPosition();
+    Position getPreviousPosition();
 
+    // settery
+    void setPosition(Position p);
+    void setAge(int a);
+    void setStrength(int s);
 
-	Organism(int, int, int, std::string, char, int, World&);
-	~Organism();
+    bool attackReflected(Organism& attacker);
+    void grow();
+    void die();
 
-	// getters
-	int getStrength();
-	int getInitiative() const;
-	int getAge();
-	std::string getSpecies();
-	char getSymbol();
-	int getPosX();
-	int getPosY();
-
-	//settery
-	void setPosx(int x);
-	void setPosy(int y);
-	void setAge(int a);
-	void setStrength(int s);
-	
-	bool attackReflected(Organism& attacker);
-	void grow();
-	void die();
-
-	void allocate();
-	void reallocate();
+    void allocate();
+    void reallocate();
+    static void drawEmpty();
 };
 #endif

@@ -1,0 +1,6 @@
+*.gch
+*.sh
+*.o
+*.out
+tags
+*.swp

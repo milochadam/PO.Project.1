@@ -1,35 +1,24 @@
-#include <iostream>
-#include "World.h"
+#include <ncurses.h>
+#include <cstdio>
 #include "Human.h"
-#include "Interface.h"
 #include "Utilities.h"
-#include "Wolf.h"
-#include "Grass.h"
-#include <conio.h>
-#define WIDTH 40
-#define HEIGHT 20
+#include "World.h"
+#define WIDTH 20
+#define HEIGHT 10
 
 int main() {
+    // necessary for ncurses
+    initscr();
+    curs_set(0);
+    World world(WIDTH, HEIGHT);
+    Human* player = new Human(world);
+    world.addOrganism(player);
 
-	// TODO: wymiary œwiata podane przez u¿ytkownika
-
-	World world(WIDTH, HEIGHT);
-
-	
-	//Wolf wolf(world);
-
-
-	// TODO: przerobiæ Interface na klasê statyczn¹
-	Interface i(world);
-	i.draw();
-
-
-	while (!world.theEnd) {
-		world.drawWorld();
-		world.doTurn();
-		world.events();
-		
-	}
-	//system("pause");
-	return 0;
+    world.drawWorld();
+    do {
+        world.executeTurn();
+        world.drawWorld();
+    } while (!world.gameOver);
+    endwin();
+    return 0;
 }

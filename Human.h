@@ -1,21 +1,19 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
-#include <conio.h>
-#include "Animal.h" // czlowiek dziedziczy od animala
+#include "Animal.h"
 class World;
-class Human :
-	public Animal
-{
-public:
-	void action() override;
-	void defense(Organism& attacker);
-	void reproduce();
-	
-	Human(World& w);
-	~Human();
+class Human : public Animal {
+   public:
+    virtual void action() override;
+    void defense(Organism& attacker) override;
+    void reproduce() override;
+    void draw() override;
 
-	void debug();
+    Human(World& w);
+    ~Human();
+
+    void debug();
 };
 
-#endif // !HUMAN_H
+#endif  // !HUMAN_H
