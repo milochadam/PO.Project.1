@@ -9,24 +9,7 @@ enum class Colour {
     MAGENTA,
     CYAN,
     WHITE,
-    BBLACK,
-    BRED,
-    BGREEN,
-    BYELLOW,
-    BBLUE,
-    BMAGENTA,
-    BCYAN,
-    BWHITE,
     DEFAULT
-};
-struct KB {
-    int a;
-    int b;
-    int c;
-    KB(int a, int b, int c) : a(a), b(b), c(c) {
-    }
-    KB() {
-    }
 };
 class Utilities {
    public:
@@ -36,7 +19,7 @@ class Utilities {
     static int randomMovement();
     static void setColour(Colour fg, Colour bg);
     static void hideCursor();
-    static KB getUserInput();
+    static char getUserInput();
 };
 
 #endif

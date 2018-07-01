@@ -36,111 +36,65 @@ void Utilities::setColour(Colour fg, Colour bg) {
     int bgcolour;
     switch (fg) {
         case Colour::BLACK:
-            fgcolour = 30;
+            fgcolour = COLOR_BLACK;
             break;
         case Colour::RED:
-            fgcolour = 31;
+            fgcolour = COLOR_RED;
             break;
         case Colour::GREEN:
-            fgcolour = 32;
+            fgcolour = COLOR_GREEN;
             break;
         case Colour::YELLOW:
-            fgcolour = 33;
+            fgcolour = COLOR_YELLOW;
             break;
         case Colour::BLUE:
-            fgcolour = 34;
+            fgcolour = COLOR_BLUE;
             break;
         case Colour::MAGENTA:
-            fgcolour = 35;
+            fgcolour = COLOR_MAGENTA;
             break;
         case Colour::CYAN:
-            fgcolour = 36;
+            fgcolour = COLOR_CYAN;
             break;
         case Colour::WHITE:
-            fgcolour = 37;
-            break;
-        case Colour::BBLACK:
-            fgcolour = 90;
-            break;
-        case Colour::BRED:
-            fgcolour = 91;
-            break;
-        case Colour::BGREEN:
-            fgcolour = 92;
-            break;
-        case Colour::BYELLOW:
-            fgcolour = 93;
-            break;
-        case Colour::BBLUE:
-            fgcolour = 94;
-            break;
-        case Colour::BMAGENTA:
-            fgcolour = 95;
-            break;
-        case Colour::BCYAN:
-            fgcolour = 96;
-            break;
-        case Colour::BWHITE:
-            fgcolour = 97;
+            fgcolour = COLOR_WHITE;
             break;
         default:
-            fgcolour = 39;
+            fgcolour = COLOR_BLACK;
             break;
     }
     switch (bg) {
         case Colour::BLACK:
-            bgcolour = 40;
+            bgcolour = COLOR_BLACK;
             break;
         case Colour::RED:
-            bgcolour = 41;
+            bgcolour = COLOR_RED;
             break;
         case Colour::GREEN:
-            bgcolour = 42;
+            bgcolour = COLOR_GREEN;
             break;
         case Colour::YELLOW:
-            bgcolour = 43;
+            bgcolour = COLOR_YELLOW;
             break;
         case Colour::BLUE:
-            bgcolour = 44;
+            bgcolour = COLOR_BLUE;
             break;
         case Colour::MAGENTA:
-            bgcolour = 45;
+            bgcolour = COLOR_MAGENTA;
             break;
         case Colour::CYAN:
-            bgcolour = 46;
+            bgcolour = COLOR_CYAN;
             break;
         case Colour::WHITE:
-            bgcolour = 47;
-            break;
-        case Colour::BBLACK:
-            bgcolour = 100;
-            break;
-        case Colour::BRED:
-            bgcolour = 101;
-            break;
-        case Colour::BGREEN:
-            bgcolour = 102;
-            break;
-        case Colour::BYELLOW:
-            bgcolour = 103;
-            break;
-        case Colour::BBLUE:
-            bgcolour = 104;
-            break;
-        case Colour::BMAGENTA:
-            bgcolour = 105;
-            break;
-        case Colour::BCYAN:
-            bgcolour = 105;
-            break;
-        case Colour::BWHITE:
-            bgcolour = 107;
+            bgcolour = COLOR_WHITE;
             break;
         default:
-            bgcolour = 49;
+            bgcolour = COLOR_BLACK;
             break;
     }
-    printf("%s%d;%dm", CSI, fgcolour, bgcolour);
+    init_pair(1, fgcolour, bgcolour);
+    attron(COLOR_PAIR(1));
+    // printf("%s%d;%dm", CSI, fgcolour, bgcolour);
 }
 
 void Utilities::hideCursor() {
@@ -151,10 +105,10 @@ void Utilities::hideCursor() {
     // SetConsoleCursorInfo(consoleHandle, &info);
 }
 
-KB Utilities::getUserInput() {
-    KB userInput;
+char Utilities::getUserInput() {
+    char userInput;
     timeout(-1);
-    userInput.a = getch();
-    //endwin();
+    userInput = getch();
+    // endwin();
     return userInput;
 }
